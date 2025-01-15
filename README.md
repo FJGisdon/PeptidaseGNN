@@ -1,15 +1,23 @@
 # PeptidaseGNN
 Learning from peptidase protein structure graphs to detect regions for potential peptidase active sites.
 
+The project is available as a snakemake workflow.
+
+In this project, I want to obtain information from active sites to detect regions in proteins where these active sites might be designed.
+Further, I want to see if there are regions in proteins, which might have such potential active sites present but without activity, which
+could give interesting evolutionary insights.
+So far, the data is collected with scripts, which are not yet implemented here, but the raw data is available.
+I am currently developing this project, so the functionality is limited.
+
 ````
-PeptidaseGNN\  # Project root
+PeptidaseGNN/  # Project root
 ├── config.yaml  # Configuration file (hyperparameters, paths, etc.)
 ├── scripts/  # Python scripts containing workflow logic
-│   ├── prepare\_data.py
-│   ├── create\_gnn\_input.py
-│   ├── train\_gcn.py
-│   ├── evaluate\_gcn.py
-│   └── analyze\_results.py
+│   ├── prepare_data.py
+│   ├── create_gnn\_input.py
+│   ├── train_gcn.py
+│   ├── evaluate_gcn.py
+│   └── analyze_results.py
 ├── Snakefile  # Main Snakemake workflow file
 └── data/  # Input and output data
     ├── raw/  # Initial data files (compiled_peptidase_modularization_data.csv, etc.)
@@ -25,4 +33,4 @@ PeptidaseGNN\  # Project root
 
 
 
-This code was developed using Google Colab.
+During the development of the code, I used using Google Colab. The notebooks will also be provided at some point.
