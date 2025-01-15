@@ -1,0 +1,23 @@
+data:
+    raw_data_csv_path: "data/raw/S1A/compiled_peptidase_modularization_data.csv"
+    raw_data_path: "data/raw/"
+    graph_information_dictionary_path: "data/processed/graph_dictionary.pkl"
+    graphs_path: "data/processed/graphs.pkl"
+    pyg_data_path: "data/processed/pyg_data.pkl" 
+    data_masks: "data/GNN_models/masks.pkl"
+    gcn_model_trained: "data/GNN_models/gcn_model_trained.pth"
+
+hyperparameters:
+    hidden_layers: 2 # available models with 1 or 2 hidden layers
+    hidden_channels_1: 256
+    hidden_channels_2: 256
+    learning_rate: 0.01
+    dropout_rate_1: 0.2
+    dropout_rate_2: 0.4
+    epochs: 100
+    batch_size: 32
+    train_ratio: 0.8
+    val_ratio: 0.1
+    test_ratio: 0.1
+
+    # ... other settings ...
