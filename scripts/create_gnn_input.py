@@ -85,10 +85,17 @@ def igraph_to_pytorch_geometric(igraph_list, target_variables):
     # Fit LabelEncoder on all chemProp5 values
     label_encoder_chemProp5 = LabelEncoder()
     label_encoder_chemProp5.fit(all_chemProp5_values)
+    
+    # Encode SSE values
+    all_sse_values = ['C', 'E', 'S', 'T', 'G', 'H', 'other']
+    encoder_SSE = LabelEncoder()
+    encoder_SSE.fit(all_sse_values)
 
 	# Precompute mappings
     residue_mapping = {residue: i for i, residue in enumerate(all_amino_acids)}
     chemProp5_mapping = {value: i for i, value in enumerate(all_chemProp5_values)}
+    sse_mapping = {sse: i for i, sse in enumerate(all_sse_values)}
+
 
     for i, graph in enumerate(igraph_list):
         if i % 50 == 0:
@@ -98,6 +105,7 @@ def igraph_to_pytorch_geometric(igraph_list, target_variables):
         strengths = np.array(graph.strength(weights='weight'))
         eigenvector_centralities = np.array(graph.eigenvector_centrality(directed=False, scale=True, return_eigenvalue=False, weights='weight'))
         betweenness_centralities = np.array(graph.betweenness(vertices=None, directed=False, cutoff=None, weights='weight'))
+        sse_values = np.array(graph.vs['SSE'])
 
         # Vectorize feature normalization
         strengths_normalized = (strengths - strengths.min()) / (strengths.max() - strengths.min())
@@ -109,14 +117,16 @@ def igraph_to_pytorch_geometric(igraph_list, target_variables):
         chemProp5_values = [v['chemProp5'] for v in graph.vs]
         residues_encoded = np.array([residue_mapping.get(r, residue_mapping['UNK']) for r in residues])
         chemProp5_encoded = np.array([chemProp5_mapping.get(val, chemProp5_mapping['n.d.']) for val in chemProp5_values])
+        sse_encoded = np.array([sse_mapping.get(val, sse_mapping['other']) for val in sse_values])
 
         # Create node features
-        node_features = np.zeros((len(graph.vs), 5), dtype=np.float32)
+        node_features = np.zeros((len(graph.vs), 6), dtype=np.float32)
         node_features[:, 0] = residues_encoded
-        node_features[:, 1] = strengths_normalized
-        node_features[:, 2] = eigenvector_centralities_normalized
-        node_features[:, 3] = betweenness_centralities_normalized
-        node_features[:, 4] = chemProp5_encoded
+        node_features[:, 1] = sse_encoded
+        node_features[:, 2] = strengths_normalized
+        node_features[:, 3] = eigenvector_centralities_normalized
+        node_features[:, 4] = betweenness_centralities_normalized
+        node_features[:, 5] = chemProp5_encoded
         node_features = torch.tensor(node_features, dtype=torch.float32)
 
 

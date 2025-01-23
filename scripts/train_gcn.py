@@ -22,7 +22,7 @@ def train_gcn(config):
 	device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 	    
     # Define the hyperparameters.
-	in_channels = 5  # Number of input features per node
+	in_channels = 6  # Number of input features per node
 	out_channels = 4 # Number of output classes (adjust to your task)
 	hidden_layers = config["hyperparameters"]["hidden_layers"]
 	hidden_channels_1 = config["hyperparameters"]["hidden_channels_1"] # Number of hidden channels in the first hidden layer
