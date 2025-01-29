@@ -5,6 +5,7 @@ dependencies:
     - python=3.12
     - scikit-learn
     - matplotlib
+    - seaborn
     - numpy
     - pandas
     - python-igraph

@@ -6,6 +6,7 @@ data:
     pyg_data_path: "data/processed/pyg_data.pkl" 
     data_masks: "data/GNN_models/masks.pkl"
     gcn_model_trained: "data/GNN_models/gcn_model_trained.pth"
+    confusion_matrix: "data/GNN_models/confusion_matrix_gcn.png"
 
 hyperparameters:
     hidden_layers: 2 # available models with 1 or 2 hidden layers

@@ -11,7 +11,9 @@ rule all:
         config["data"]["graphs_path"],
         config["data"]["pyg_data_path"],
         config["data"]["data_masks"],
-        config["data"]["gcn_model_trained"]
+        config["data"]["gcn_model_trained"],
+        config["data"]["confusion_matrix"]
+        
         # ... any other final outputs ...
 
 
@@ -46,6 +48,19 @@ rule train_gcn:
         "envs/env_gnn.yaml"  # Path to the environment file
     script:
         "scripts/train_gcn.py"
+        
+
+rule evaluate_gcn:
+	input:
+		[config["data"]["pyg_data_path"],config["data"]["data_masks"],config["data"]["gcn_model_trained"]]
+	output:
+		config["data"]["confusion_matrix"]
+	conda:
+		"envs/env_gnn.yaml"  # Path to the environment file
+	script:
+		"scripts/evaluate_gcn.py"
+		
+		
         
         
         
